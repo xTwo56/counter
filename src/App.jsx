@@ -5,6 +5,8 @@ import { Button } from "./components/button"
 import { Info } from "./components/info"
 import counterAbi from "./lib/CounterAbi.json"
 
+const counterAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+
 function App() {
 
   const [login, setLogin] = useState(false);
@@ -14,12 +16,11 @@ function App() {
 
   async function loadBlockchainData() {
     try {
-      console.log(window.ethereum)
-      const newProvider = new ethers.providers.BrowserProvider(window.ethereum)
+      console.log(counterAddress)
+      const newProvider = new ethers.BrowserProvider(window.ethereum)
       setProvider(newProvider)
-      const network = await newProvider.getNetwork()
 
-      const newContract = new ethers.Contract(config[network.chainId].counter.address, counterAbi, provider)
+      const newContract = new ethers.Contract(counterAddress, counterAbi.abi, newProvider)
       setContract(newContract)
       setLoading(false)
     } catch (err) {
@@ -37,7 +38,7 @@ function App() {
         <div>loading...</div>
       ) : (
         <div>
-          <Info loading={loading} setLogin={setLogin} contract={contract} setContract={setContract} />
+          <Info provider={provider} setLogin={setLogin} contract={contract} setContract={setContract} />
           <Button change="desc" login={login} />
           <Display />
           <Button change="inc" login={login} />
