@@ -1,7 +1,8 @@
 
+import { ethers } from "ethers"
 import { useState } from "react"
 
-export function SigninButton({ provider, setLogin, contract, setContract }) {
+export function SigninButton({ provider, setLogin, setContract, contractAddress, contractAbi }) {
   const [account, setAccount] = useState(null)
 
   return (
@@ -17,13 +18,16 @@ export function SigninButton({ provider, setLogin, contract, setContract }) {
 
   async function signinHandler() {
     if (!account) {
+
+      console.log("connecting")
       const signer = await provider.getSigner();
-      const newContract = await contract.connect(signer)
+      const newContract = new ethers.Contract(contractAddress, contractAbi.abi, signer)
       setContract(newContract)
 
       const newAccount = await signer.getAddress()
       setAccount(newAccount)
       setLogin(true)
+      console.log("done")
     }
 
   }

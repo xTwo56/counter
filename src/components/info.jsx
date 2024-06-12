@@ -1,10 +1,10 @@
 import { SigninButton } from "./signinButton"
 
-export function Info({ provider, setLogin, contract, setContract }) {
+export function Info({ provider, setLogin, setContract, contractAddress, contractAbi }) {
   return (
     <div>
       sign in to interact
-      <SigninButton provider={provider} setLogin={setLogin} contract={contract} setContract={setContract} />
+      <SigninButton provider={provider} setLogin={setLogin} setContract={setContract} contractAddress={contractAddress} contractAbi={contractAbi} />
     </div>
   )
 }
