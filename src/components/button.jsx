@@ -5,7 +5,8 @@ export function Button({ change, login, contract, setValue }) {
   const [loading, setLoading] = useState(false)
 
   return (
-    <div onClick={loading ? null : changeCounter}>
+    <div onClick={loading ? null : changeCounter}
+      className="flex justify-center items-center h-32 w-32 p-8 m-4 bg-red-200 rounded-full text-2xl font-thin border-2 border-black">
       {loading ? "loading..." : change}
     </ div>
   )

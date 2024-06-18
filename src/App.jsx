@@ -12,7 +12,6 @@ function App() {
   const [login, setLogin] = useState(false);
   const [provider, setProvider] = useState(null)
   const [contract, setContract] = useState(null)
-  const [loading, setLoading] = useState(true);
   const [value, setValue] = useState(null);
 
   async function loadBlockchainData() {
@@ -22,7 +21,6 @@ function App() {
 
       const newContract = new ethers.Contract(contractAddress, contractAbi.abi, newProvider)
       setContract(newContract)
-      setLoading(false)
     } catch (err) {
       console.log("ERROR:\n" + err)
     }
@@ -33,17 +31,15 @@ function App() {
   }, [])
 
   return (
-    <div>
-      {loading ? (
-        <div>loading...</div>
-      ) : (
-        <div>
-          <Info provider={provider} setLogin={setLogin} setContract={setContract} contractAddress={contractAddress} contractAbi={contractAbi} />
-          <Button change="dec" login={login} contract={contract} setValue={setValue} />
-          <Display contract={contract} value={value} setValue={setValue} />
-          <Button change="inc" login={login} contract={contract} setValue={setValue} />
-        </div>
-      )}
+    <div className="h-screen bg-red-100 flex-col">
+      <div>
+        <Info provider={provider} setLogin={setLogin} setContract={setContract} contractAddress={contractAddress} contractAbi={contractAbi} />
+      </div>
+      <div className="flex flex-row justify-center items-center border-2 border-black m-auto my-32 w-1/3 h-1/2 bg-red-300 rounded-2xl">
+        <Button change="dec" login={login} contract={contract} setValue={setValue} />
+        <Display contract={contract} value={value} setValue={setValue} />
+        <Button change="inc" login={login} contract={contract} setValue={setValue} />
+      </div>
     </div>
   )
 }

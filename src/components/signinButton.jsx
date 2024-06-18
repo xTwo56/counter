@@ -6,7 +6,8 @@ export function SigninButton({ provider, setLogin, setContract, contractAddress,
   const [account, setAccount] = useState(null)
 
   return (
-    <div onClick={signinHandler}>
+    <div onClick={signinHandler}
+      className="border-2 bg-red-300 p-4 rounded-lg">
       {account ? (
         <div> {account} </div>
       ) : (
